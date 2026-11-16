@@ -7,7 +7,7 @@
 
 ### 1.1. Tiến độ theo acceptance criteria
 <!-- Track A: A-01…A-11 · Track B: B-01…B-10 (đề thi Mục 7.3 / 8.3). Đủ mọi mã. -->
-| Mã | Trạng thái (Chưa / Đang / Xong) | Bằng chứng (commit / CI / file) | Ghi chú |
+| Mã | Trạng thái (Chưa / Đã Xong) | Bằng chứng (commit / CI / file) | Ghi chú |
 |---|---|---|---|
 | A-01 | Chưa | `REQUIREMENTS.md` (FR-01…FR-07), `DECISIONS.md` (ADR-001, ADR-002); chưa có commit code | Đã chốt thiết kế và thứ tự ưu tiên R01 > R02 > R03. Chưa viết `r01`, `r02`, `r03`, `is_hypotensive`, `classify()` |
 | A-02 | Chưa | `REQUIREMENTS.md` (NFR-01, AC-27) | Sẽ viết test dùng dữ liệu ngoài fixture công khai. Chưa có code |
@@ -51,9 +51,11 @@
 - Q1: 
 
 ### 1.6. Phân công (alias hoặc vai trò, KHÔNG ghi họ tên/MSSV)
-| Alias / vai trò | Đầu việc chính | Commit/PR tiêu biểu |
+| Alias | vai trò | Đầu việc chính | 
 |---|---|---|
-
+|Thành viên 1|BA|Logic rule|
+|Thành viên 2|FE|Test|
+|Thành viên 3|BE|audit/CI/Benchmark|
 
 
 ## Kết quả cuối — Freeze 19/11/2026
