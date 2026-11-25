@@ -1,35 +1,66 @@
-# KTPMUD BKT-1 (Track A) — Dr May Day: Rule Engine Sprint — Starter
+# KTPMUD BKT-1 (Track A) — Dr May Day: Rule Engine Sprint (Nhóm 11)
 
-Khung project khoi dong cho **Bai kiem tra Hackathon BKT-1 (Track A)**, mon
-Ky thuat Phan mem Ung dung (KTPMUD). **Day la skeleton rong**, khong phai loi
-giai mau — sinh vien fork repo nay va hien thuc `rule_engine/classifier.py`.
+> **DISCLAIMER:** This project is for educational/synthetic purposes only — **NOT FOR CLINICAL USE**.
+> Sản phẩm chỉ phục vụ học tập và nghiên cứu với dữ liệu giả lập (synthetic data), không được sử dụng cho mục đích chẩn đoán hay điều trị y tế thực tế.
 
-## Boi canh
+---
 
-**Dac ta chinh thuc (Data Dictionary + bang quyet dinh V1) nam o
-[`docs/decision-table.md`](docs/decision-table.md) trong chinh repo nay.**
-`do_an_mon_hoc.md` cua KTPMUD chi yeu cau tuan thu chuan WAO/EAACI, khong co
-bang chi tiet - dung dung `docs/decision-table.md` lam nguon duy nhat.
+## 1. Giới thiệu
 
-**Khong tu suy dien nguong/quy tac lam sang moi ngoai `docs/decision-table.md`.**
+Hệ thống **Rule Engine** hỗ trợ phân loại nguy cơ phản vệ và sốc phản vệ khẩn cấp dựa trên **Bảng quyết định WAO/EAACI V1** ([docs/decision-table.md](docs/decision-table.md)).
+Hệ thống vận hành theo nguyên tắc **Zero PII** (bảo mật tuyệt đối, không nhận hay lưu trữ thông tin định danh) và có khả năng giải thích rõ ràng (Explainable).
 
-## Cach chay
+---
+
+## 2. Cài đặt và Chạy kiểm thử từ Clean Checkout (A-08)
+
+Yêu cầu môi trường: Python 3.9+ (khuyến nghị Python 3.11 hoặc 3.13).
 
 ```bash
+# 1. Tạo môi trường ảo
+python -m venv .venv
+
+# 2. Kích hoạt môi trường ảo
+# Trên Windows:
+.\.venv\Scripts\activate
+# Trên Linux/macOS:
+source .venv/bin/activate
+
+# 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
+
+# 4. Chạy bộ kiểm thử tự động (61 test cases, 45 AC)
 pytest -q
 ```
 
-## MVP bat buoc
+---
 
-- Ham `classify()` trong `rule_engine/classifier.py` chay dung theo dac ta.
-- Co bo test tu dong (`pytest`) voi it nhat 1 ca cho moi muc nguy co.
-- Benchmark latency < 100ms (tu do, ghi vao bao cao np).
-- Audit trail `[Timestamp, User_UUID, Action_Type, Status]` cho moi lan phan loai.
+## 3. Chạy đo Hiệu năng (Benchmark Latency - A-10)
 
-## Luu y
+Hệ thống cung cấp script đo độ trễ độc lập bằng Python standard library:
 
-- Day la khung khoi dong — **khong chua bo test an dung de cham diem**
-  (xem BKT-PR-2b trong de xuat KTPMUD). GV/TA se cham bang bo test rieng.
-- Nop bai qua `ktpmud-project` theo dung huong dan `nop_bai.md` cua KTPMUD,
-  khong tao ha tang nop bai moi.
+```bash
+python benchmark.py
+```
+
+- **Quy trình:** 200 lượt warm-up + 5.000 lượt đo chính thức bằng `time.perf_counter()`.
+- **Kết quả thực tế:** $p50 \approx 0.0015\text{ ms}$, $p95 \approx 0.0021\text{ ms} \ll 100\text{ ms}$ (đạt xuất sắc tiêu chí đề ra).
+- Kết quả chi tiết và thông số phần cứng được tự động ghi nhận vào [`submissions_Nhom11/TEST_REPORT.md`](submissions_Nhom11/TEST_REPORT.md).
+
+---
+
+## 4. Cấu trúc Thư mục
+
+- `rule_engine/classifier.py`: Mã nguồn chính chứa logic 2 tầng phân loại (`classify`) và ghi Audit Trail (`classify_with_audit`).
+- `tests/test_classifier.py`: Bộ kiểm thử tự động 61 test cases bao phủ toàn diện 45 Acceptance Criteria.
+- `benchmark.py`: Script đo đạc hiệu năng và phân vị độ trễ ($p50, p95, p99$).
+- `docs/decision-table.md`: Đặc tả bảng quyết định chuẩn WAO/EAACI V1.
+- `submissions_Nhom11/`: Toàn bộ hồ sơ báo cáo và tài liệu kỹ thuật của Nhóm 11:
+  - `REQUIREMENTS.md`: Tài liệu đặc tả yêu cầu chức năng, phi chức năng và 45 AC.
+  - `DECISIONS.md`: Nhật ký quyết định thiết kế kiến trúc (ADR-001 đến ADR-004).
+  - `TEST_PLAN.md`: Kế hoạch và ma trận kiểm thử chi tiết.
+  - `TEST_REPORT.md`: Báo cáo kết quả kiểm thử tự động và đo lường hiệu năng.
+  - `SECURITY_PRIVACY_CHECKLIST.md`: Báo cáo kiểm tra tuân thủ an toàn thông tin và Zero PII.
+  - `AI_USE.md`: Báo cáo khai báo minh bạch việc sử dụng công cụ AI.
+  - `CONTRIBUTIONS.md`: Bảng phân công và đóng góp của các thành viên.
+- `progress/PROGRESS.md`: Nhật ký theo dõi tiến độ qua các mốc kiểm tra (PC-1, PC-2, Freeze).
